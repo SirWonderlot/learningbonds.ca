@@ -53,12 +53,17 @@
       .motto { padding-bottom: 2rem; }
       .motto-panel { padding: 3rem 1.25rem 3.25rem; }
       .motto-text { font-size: 1.1rem; line-height: 1.6; }
-      .motto-text .nw { white-space: normal; }
+      .motto-panel .nw { white-space: normal; }
     }
     /* Desktop: no button under the photo (Todd, 2026-11-19). Phones keep it for now. */
-    .hero-go { display: none; } /* phones too, to try it (Todd, 2026-11-19) */
-    @media (min-width: 641px) { .motto:first-of-type { margin-top: 2rem; } }
-    @media (max-width: 640px) { .motto:first-of-type { margin-top: 1.75rem; } }
+    @media (min-width: 641px) { .hero-go { display: none; } .motto:first-of-type { margin-top: 2rem; } }
+    /* Phones: buttons a normal size, not full width (Todd, 2026-11-19). */
+    @media (max-width: 640px) {
+      .btn.btn-wide { display: inline-flex; width: auto; font-size: 1.02rem; padding: .7rem 1.15rem; border-radius: 8px; }
+      .hero-go { padding-top: 1.4rem; }
+    }
+    /* Text in the CLB and unclaimed panels left-aligned, like the program list; labels and headings stay centred. */
+    .motto-text, .motto-panel.what-is p { text-align: left; }
     /* FAQ: same grey panel; each question opens and closes, with a plus sign on the right. */
     .faq-home { padding-top: .5rem; }
     .faq-home .motto-panel { padding-top: 3.5rem; padding-bottom: 3.5rem; }
