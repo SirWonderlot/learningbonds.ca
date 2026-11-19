@@ -1,0 +1,88 @@
+/* Home page concepts (mock-ups only) */
+.hero { background: var(--surface); border-bottom: 1px solid var(--line); padding: 2.5rem 0 2.5rem; }
+.hero h1 { margin-bottom: .6rem; }
+.hero .lede { font-size: 1.25rem; color: var(--text); max-width: 640px; margin: 0; }
+.hero .free { color: var(--muted); font-size: 1.1rem; margin: .9rem 0 0; }
+.hero .btn-wide { margin-top: 1.5rem; padding: .6rem 1.2rem; font-size: 1.05rem; }
+.hero.center { text-align: center; padding: 3rem 0; }
+.hero.center .lede, .hero.center .free { margin-left: auto; margin-right: auto; }
+.big-head { font-size: clamp(2.1rem, 7vw, 3.4rem); line-height: 1.1; letter-spacing: -.02em; }
+
+/* Three figures */
+.figures { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.figures li { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.25rem 1.25rem 1.1rem; }
+.figures b { display: block; font-size: 2.2rem; line-height: 1.1; color: var(--ink); letter-spacing: -.01em; }
+.figures span { display: block; color: var(--muted); margin-top: .3rem; font-size: 1.05rem; }
+
+/* Checklist */
+.checks { list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; max-width: 560px; }
+.checks li { margin: 0; display: flex; gap: .8rem; align-items: center; padding: .85rem 0; border-bottom: 1px solid var(--line); color: var(--ink); }
+.checks li:first-child { border-top: 1px solid var(--line); }
+.checks svg { flex: none; color: #1e7a46; }
+
+/* Icon points */
+.points { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.points li { margin: 0; text-align: center; padding: 1.5rem 1rem; background: #fff; border: 1px solid var(--line); border-radius: 14px; }
+.points .ic { display: inline-grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--note-bg); color: var(--link); margin-bottom: .75rem; }
+.points b { display: block; color: var(--ink); font-size: 1.15rem; }
+.points span { display: block; color: var(--muted); margin-top: .25rem; font-size: 1.02rem; }
+
+/* Simple numbered steps, stacked */
+.flow { list-style: none; padding: 0; margin: 1.25rem 0 0; counter-reset: f; max-width: 560px; }
+.flow li { counter-increment: f; position: relative; margin: 0; padding: 0 0 1.4rem 3.25rem; color: var(--ink); }
+.flow li::before { content: counter(f); position: absolute; left: 0; top: -.1rem; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--link); color: #fff; font-weight: 700; display: grid; place-items: center; }
+.flow li:not(:last-child)::after { content: ""; position: absolute; left: 1.05rem; top: 2.3rem; bottom: .2rem; width: 2px; background: var(--note-line); }
+.flow b { display: block; }
+.flow span { display: block; color: var(--muted); font-size: 1.02rem; }
+
+/* Big statement */
+.statement { text-align: center; padding: 3.25rem 0; }
+.statement p { font-size: clamp(1.6rem, 5vw, 2.3rem); line-height: 1.25; font-weight: 700; color: var(--ink); max-width: 760px; margin: 0 auto; letter-spacing: -.01em; }
+.statement .src { font-size: 1rem; font-weight: 400; color: var(--muted); margin-top: 1rem; letter-spacing: 0; }
+
+/* Folded details */
+.more-details { max-width: var(--prose); border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.more-details summary { cursor: pointer; list-style: none; padding: 1.1rem 1.25rem; font-weight: 700; color: var(--ink); display: flex; justify-content: space-between; align-items: center; }
+.more-details summary::-webkit-details-marker { display: none; }
+.more-details summary::after { content: ""; width: 10px; height: 10px; border-right: 2.5px solid var(--muted); border-bottom: 2.5px solid var(--muted); transform: rotate(45deg); margin: -4px 4px 0 0; }
+.more-details[open] summary::after { transform: rotate(-135deg); margin-top: 4px; }
+.more-details .facts { margin: 0; padding: 0 1.25rem; border-top: 1px solid var(--line); }
+.more-details .facts li:last-child { border-bottom: 0; }
+
+/* Start-here question in the hero */
+.start-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.25rem 1.25rem 1.4rem; margin-top: 1.5rem; max-width: 460px; }
+.start-card label { display: block; color: var(--ink); font-weight: 600; margin-bottom: .6rem; }
+.start-card .btn-wide { margin-top: 1rem; width: 100%; min-width: 0; display: flex; }
+
+.cta-band { text-align: center; }
+.cta-band h2 { margin-bottom: 1rem; }
+
+@media (max-width: 720px) {
+  .figures, .points { grid-template-columns: 1fr; }
+  .hero { padding: 2rem 0; }
+  .hero .lede { font-size: 1.15rem; }
+  .points li { display: grid; grid-template-columns: 56px 1fr; gap: 0 1rem; text-align: left; align-items: center; padding: 1.1rem; }
+  .points .ic { margin: 0; grid-row: span 2; }
+}
+
+/* Concept D: lighter statement, one sentence per line */
+.statement.light p:first-child { font-weight: 400; }
+.statement.light p:first-child > span { display: block; text-wrap: balance; }
+.statement.light p:first-child > span + span { margin-top: .35rem; }
+
+/* Concept D: "The program" section */
+.program-head { text-align: center; margin-bottom: 1.5rem; }
+.program-head h2 { margin-bottom: 0; }
+.program .facts { margin: 1.25rem 0; }
+.program-cta { text-align: center; margin-top: 1.75rem; }
+
+/* Concept D: original hero wording and "What is" section */
+.hero.center .lede + .lede { margin-top: .5rem; }
+.what-is { text-align: center; }
+.what-is h2 { margin-bottom: .9rem; }
+.what-is p { max-width: 640px; margin: 0 auto .5rem; font-size: 1.15rem; color: var(--text); }
+.statement.shade { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+/* Even line breaks in centred text; .nw keeps a phrase on one line */
+.hero.center h1, .hero.center p, .what-is h2, .what-is p, .program-head h2, .statement p { text-wrap: balance; }
+.nw { white-space: nowrap; }

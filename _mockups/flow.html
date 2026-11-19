@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LearningBonds.ca: how it flows so far</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400..700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink: #1c2630; --text: #2e3a46; --muted: #5a6876; --line: #d9e0e7; --link: #1a4d8f; --accent: #b42318;
+      --note: #eef4fb; --warn: #fdf3f2; --warn-line: #f1c9c4; --todo: #fff8e8; --todo-line: #ecd9a8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f6f8; color: var(--text); font: 17px/1.5 "Source Sans 3", system-ui, sans-serif; padding: 2.5rem 1rem 4rem; }
+    .page { max-width: 980px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 2rem; }
+    h1 { color: var(--ink); font-weight: 500; font-size: 2rem; margin: 0 0 .3rem; }
+    header p { margin: 0; color: var(--muted); }
+    .eyebrow { display: block; color: var(--accent); font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .3rem; }
+    .step { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.4rem; }
+    .step h2 { color: var(--ink); font-size: 1.3rem; font-weight: 600; margin: 0 0 .5rem; }
+    .step h3 { color: var(--ink); font-size: 1.05rem; font-weight: 600; margin: 1rem 0 .3rem; }
+    .step h3:first-of-type { margin-top: .6rem; }
+    .step p { margin: 0 0 .5rem; }
+    .step ul, .step ol { margin: .2rem 0 .5rem; padding-left: 1.25rem; }
+    .step li { margin: .15rem 0; }
+    .step .where { color: var(--muted); font-size: .95rem; margin-bottom: .6rem; }
+    .step.form { border: 2px solid var(--link); }
+    .step.warn { background: var(--warn); border-color: var(--warn-line); }
+    .step.todo { background: var(--todo); border-color: var(--todo-line); }
+    .step.note { background: var(--note); border-color: #c9daee; }
+    .arrow { text-align: center; color: #9aa6b2; font-size: 1.6rem; line-height: 1; margin: .35rem 0; }
+    .arrow small { display: block; font-size: .9rem; color: var(--muted); margin-top: .1rem; }
+    .split { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; align-items: start; }
+    .split .label { text-align: center; color: var(--muted); font-size: .95rem; margin-bottom: .4rem; }
+    .tag { display: inline-block; font-size: .8rem; font-weight: 600; padding: .05rem .5rem; border-radius: 999px; background: #e7eef7; color: var(--link); margin-left: .35rem; vertical-align: 2px; }
+    .tag.todo { background: #f6e7bf; color: #7a5a12; }
+    a { color: var(--link); }
+    .key { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1.25rem; margin: 0 0 2rem; font-size: .95rem; color: var(--muted); }
+    .key span { display: inline-flex; align-items: center; gap: .4rem; }
+    .key i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; border: 1px solid var(--line); background: #fff; }
+    .key i.form { border: 2px solid var(--link); }
+    .key i.warn { background: var(--warn); border-color: var(--warn-line); }
+    .key i.todo { background: var(--todo); border-color: var(--todo-line); }
+    .key i.note { background: var(--note); border-color: #c9daee; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>How LearningBonds.ca flows so far</h1>
+    <p>From landing on the site to the end of the eligibility results. As built on November 15, 2026.</p>
+  </header>
+
+  <div class="key">
+    <span><i></i>Page or result</span>
+    <span><i class="form"></i>The form (questions asked)</span>
+    <span><i class="warn"></i>Not eligible</span>
+    <span><i class="note"></i>Where people are sent</span>
+    <span><i class="todo"></i>Not built yet</span>
+  </div>
+
+  <!-- 1. Home -->
+  <div class="step">
+    <span class="eyebrow">Step 1 · Home page (locked)</span>
+    <h2>They land on LearningBonds.ca</h2>
+    <ol>
+      <li><b>Canada Learning Bond</b>: "Receive up to $2,000 in free deposits from the Federal Government of Canada. There are no fees to use this service." (no button)</li>
+      <li><b>What is the Canada Learning Bond?</b> Free money for qualified Canadians saving for their child's future education. No fees to apply.</li>
+      <li><b>Money waiting to be claimed</b>: over 3 million eligible children have not yet received it.</li>
+      <li><b>The program</b>: 6 highlights, then a small <b>Check My Eligibility</b> button.</li>
+      <li><b>The process</b>: Check eligibility, Learn your child's entitlement amount, Apply for the Learning Bond, then a small <b>Check My Eligibility</b> button.</li>
+    </ol>
+    <p class="where">The menu also has Check My Eligibility. Menu links to the Education Savings Grant, FAQ, Contact, Privacy and Terms pages lead nowhere yet. <span class="tag todo">Pages not built</span></p>
+  </div>
+  <div class="arrow">&darr;<small>Check My Eligibility</small></div>
+
+  <!-- 2. Form -->
+  <div class="step form">
+    <span class="eyebrow">Step 2 · The form (the only form on the site)</span>
+    <h2>Eligibility questions, all on one page</h2>
+    <p class="where">Address: /eligibility/. Nothing is sent or stored. First names stay on their phone.</p>
+    <p>Each question has a short line saying why we ask.</p>
+    <ol>
+      <li><b>Which province or territory do you live in?</b> Drop-down.</li>
+      <li><b>How many children under 18 do you have?</b> Drop-down: None, 1 to 16.</li>
+      <li><b>Do you have any children aged 18, 19 or 20?</b> Yes / No. If Yes: how many?</li>
+      <li><b>Tell us about each child.</b> "First name only. For illustration purposes only. Your child's name is not saved or shared." One row per child:
+        <ul>
+          <li>First name (typed)</li>
+          <li>Age (under 18: Under 1 to 17; then 18, 19 or 20)</li>
+          <li>Gender: M or F</li>
+        </ul>
+      </li>
+      <li><b>What is your family net income?</b> Only if there are children under 18. Two buttons showing that family's limit, for example "$58,523 or less" / "More than $58,523" (2026–27 limits, by number of children under 18).</li>
+      <li><b>For each child aged 18 to 20:</b> "While Sam was 15 or younger, was your family net income at or below the limit in at least one year?" with that child's range of yearly limits (for example $36,378 to $50,197 at age 19). Yes / No / Not sure.</li>
+      <li><b>Does your child currently have a Registered Education Savings Plan (RESP)?</b> Each child listed by name, with Yes / No beside it.</li>
+      <li><b>View my unclaimed amounts</b> (turns on once everything is answered).</li>
+    </ol>
+    <p class="where">If there are no children under 21, the form says "The Canada Learning Bond is available to eligible children and young adults under the age of 21."</p>
+  </div>
+  <div class="arrow">&darr;<small>View my unclaimed amounts</small></div>
+
+  <!-- 3. Results -->
+  <div class="step">
+    <span class="eyebrow">Step 3 · Results</span>
+    <h2>Each child's results, one after another</h2>
+  </div>
+  <div class="arrow">&darr;</div>
+  <div class="split">
+    <div>
+      <div class="label">Income within the limit</div>
+      <div class="step">
+        <h3>"Tony could collect up to $2,000"</h3>
+        <ul>
+          <li>Today (including past years)</li>
+          <li>Going forward: $100 a year until age 15</li>
+          <li>B.C. Training and Education Savings Grant: $1,200 (B.C. children aged 6 to 8)</li>
+          <li>Total</li>
+        </ul>
+        <h3>Chart for each child under 18</h3>
+        <p>What it could be worth at 18: Bond deposits, then 6%, 8% and 10% a year. Each child has their own colour (blue, purple, amber, rose). The bars grow and the amounts count up.</p>
+        <h3>Notes under the charts</h3>
+        <ul>
+          <li>Grows at these average yearly rates; for illustration only.</li>
+          <li>"This is free money from the federal government. It is already there for your child. You just need to claim it."</li>
+          <li>"These amounts are estimates provided for illustration purposes. The actual amount may vary depending on your family's net income during each year of eligibility."</li>
+          <li>If a child has an RESP: some may already have been paid.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="label">Income above the limit</div>
+      <div class="step warn">
+        <p>"Your family net income exceeds the qualifications for the Canada Learning Bond."</p>
+        <p>Each child: "Not eligible for the Canada Learning Bond."</p>
+        <p>Exception: a B.C. child aged 6 to 8 still sees the $1,200 B.C. grant (no income limit).</p>
+      </div>
+      <div class="arrow">&darr;</div>
+      <div class="step">
+        <h3>What is an RESP?</h3>
+        <p>Short explanation: the CESG adds 20% to deposits (up to $500 a year, $7,200 in total); deposits are returned if the child does not continue their education.</p>
+        <p>Each child under 16 with no RESP: a chart with three stacked bars ($50, $100, $150 a month): your deposits, CESG, growth at 6%, and the total at 18.</p>
+        <p>Child with an RESP: "&#10003; Already has an RESP."</p>
+        <p>Child aged 16 or 17: a note that they can no longer receive the CESG.</p>
+      </div>
+    </div>
+    <div>
+      <div class="label">Child aged 18 to 20</div>
+      <div class="step">
+        <p>Yes: "Sam could collect up to $2,000" (Today: based on the years before Sam turned 16).</p>
+        <p>Not sure: "Sam may be able to collect up to $2,000".</p>
+        <p>Note: Sam requests the Learning Bond themselves, before they turn 21.</p>
+      </div>
+      <div class="step warn" style="margin-top:.6rem">
+        <p>No: "Not eligible for the Canada Learning Bond."</p>
+      </div>
+    </div>
+  </div>
+  <div class="arrow">&darr;</div>
+
+  <!-- 4. Programs question -->
+  <div class="step form">
+    <span class="eyebrow">Step 4 · One more question (every family, any income)</span>
+    <h2>"Are you interested in information about additional programs that may be helpful for your child's academic and/or financial future?"</h2>
+    <p>Yes / No</p>
+  </div>
+  <div class="split" style="margin-top:.35rem">
+    <div>
+      <div class="arrow">&darr;<small>No</small></div>
+      <div class="step"><p>Nothing opens. They carry on to "How to apply" below.</p></div>
+    </div>
+    <div>
+      <div class="arrow">&darr;<small>Yes: two programs open underneath</small></div>
+      <div class="step">
+        <h3>Learning Access Grant</h3>
+        <p>For children in grades 4 to 12. Up to $1,200 a year toward approved tutoring programs.</p>
+        <p><b>Learn more</b> &rarr; the Learning Access Grant's own site, in a new tab. <span class="tag todo">Link to come</span></p>
+        <h3>Advantage Plus</h3>
+        <p>For children aged 18 and under. A program designed to help them financially in the future. It can be used for several different things.</p>
+        <p>For each child aged 0 to 18, an example at $50, $75 and $100 a month: fully paid after 20 years, projected cash value at 65, projected death benefit at 65 (from your Advantage Plus calculator's iA figures).</p>
+        <p>Protection note, then "For illustration purposes only. Projected values are not guaranteed."</p>
+        <p><b>Book a call</b> &rarr; your booking calendar. This is the only place to book a call; the specialist also helps with the Bond. <span class="tag todo">Calendly link to come</span></p>
+      </div>
+    </div>
+  </div>
+  <div class="arrow">&darr;</div>
+
+  <!-- 5. How to apply -->
+  <div class="step note">
+    <span class="eyebrow">Step 5 · Bottom of the results (any child eligible)</span>
+    <h2>How to apply</h2>
+    <p>"You can apply through an RESP provider of your choice. The Government of Canada explains how."</p>
+    <p><b>See how to apply</b> &rarr; <a href="https://www.canada.ca/en/services/benefits/education/education-savings/opening-plan.html" target="_blank" rel="noopener">canada.ca: opening an RESP</a>, in a new tab. Same for every province.</p>
+    <p class="where">Then "Start again" takes them back to the form.</p>
+  </div>
+
+  <div class="step todo" style="margin-top:2.5rem">
+    <span class="eyebrow">Still to do</span>
+    <ul>
+      <li>Whether families under the limit with no RESP also see the RESP section (your call).</li>
+      <li>The Learning Access Grant site link and the Calendly booking link.</li>
+      <li>How the application gets started for Ontario and B.C. families.</li>
+      <li>Logging anonymous results to a Google Sheet (not connected; nothing is collected today).</li>
+      <li>Pages: Education Savings Grant, FAQ, Contact, Privacy, Terms of Use.</li>
+      <li>Home page desktop version with the Parliament photo (waiting for your approval).</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eligibility tool: desktop stages</title>
+  <style>
+    body { margin: 0; background: #e9edf1; font-family: system-ui, sans-serif; padding: 1.5rem 1rem 3rem; color: #44505c; }
+    h2 { text-align: center; color: #1c2630; margin: 2.5rem 0 1.25rem; font-size: 1.3rem; }
+    h2:first-child { margin-top: .5rem; }
+    .row { display: flex; flex-direction: column; align-items: center; gap: 2.5rem; }
+    figure { margin: 0; text-align: center; }
+    figcaption { margin: 0 auto .75rem; font-weight: 600; color: #1c2630; max-width: 700px; }
+    figcaption small { display: block; font-weight: 400; color: #5a6876; margin-top: .2rem; }
+    /* A 1280 x 800 laptop screen, scaled down to fit narrower windows. */
+    .fit { width: 1296px; height: 852px; }
+    .phone { width: 1280px; height: 800px; border: 8px solid #1c2630; border-top-width: 44px; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 20px 50px rgba(0,0,0,.25); transform-origin: top left; position: relative; }
+    .phone::before { content: ""; position: absolute; top: -27px; left: 14px; width: 52px; height: 10px; border-radius: 5px; background: radial-gradient(circle at 5px 5px, #ff5f57 5px, transparent 5.5px), radial-gradient(circle at 26px 5px, #febc2e 5px, transparent 5.5px), radial-gradient(circle at 47px 5px, #28c840 5px, transparent 5.5px); }
+    iframe { width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+  <h2>The form</h2>
+  <div class="row">
+    <figure><figcaption>1. Start<small>Province first; each question says why we ask</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{}' title="Start"></iframe></div></div></figure>
+    <figure><figcaption>2. Children under 18, then 18 to 20<small>Two under 18, one aged 18 to 20</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M",""],["Mia","4","F",""],["Sam","19","M",""]],"at":"adults-q","nudge":-200}' title="Children"></iframe></div></div></figure>
+    <figure><figcaption>3. Each child<small>First name, age and gender</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M",""],["Mia","4","F",""],["Sam","19","M",""]],"at":"kids-q"}' title="Each child"></iframe></div></div></figure>
+    <figure><figcaption>4. Income<small>Today's income for the children under 18, then the years before 16 for Sam (19)</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M",""],["Mia","4","F",""],["Sam","19","M",""]],"province":"ON","income":"yes","at":"[data-key=income]"}' title="Income"></iframe></div></div></figure>
+    <figure><figcaption>5. All answered<small>RESP asked for each child by name</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"],["Sam","19","M","no","yes"]],"province":"ON","income":"yes","at":"past-qs"}' title="All answered"></iframe></div></div></figure>
+  </div>
+
+  <h2>The results</h2>
+  <div class="row">
+    <figure><figcaption>Ontario, two children<small>Each child has their own amounts</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1}' title="Ontario two"></iframe></div></div></figure>
+    <figure><figcaption>Tony's chart<small>First child: blue</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1,"at":".kid-result:nth-child(1) .growth","nudge":-40}' title="Tony chart"></iframe></div></div></figure>
+    <figure><figcaption>Mia's chart<small>Second child: purple</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1,"at":".kid-result:nth-child(2) .growth","nudge":-40}' title="Mia chart"></iframe></div></div></figure>
+  </div>
+  <div class="row" style="margin-top:2.5rem">
+    <figure><figcaption>Third child<small>Amber</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","12","M","no"],["Mia","7","F","no"],["Leo","2","M","no"],["Ava","0","F","no"]],"province":"ON","income":"yes","see":1,"at":".kid-result:nth-child(3) .growth","nudge":-40}' title="Third"></iframe></div></div></figure>
+    <figure><figcaption>Fourth child<small>Rose</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","12","M","no"],["Mia","7","F","no"],["Leo","2","M","no"],["Ava","0","F","no"]],"province":"ON","income":"yes","see":1,"at":".kid-result:nth-child(4) .growth","nudge":-40}' title="Fourth"></iframe></div></div></figure>
+    <figure><figcaption>British Columbia<small>Mia (7) also gets the B.C. grant</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","7","F","yes"]],"province":"BC","income":"yes","see":1}' title="BC"></iframe></div></div></figure>
+    <figure><figcaption>Income above the limit<small>Not eligible for the Bond</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"no","see":1}' title="Over limit"></iframe></div></div></figure>
+  </div>
+
+  <h2>Children aged 18 to 20</h2>
+  <div class="row">
+    <figure><figcaption>1. Sam (19): yes<small>Income was within the limit in at least one year</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"],["Sam","19","M","no","yes"]],"province":"ON","income":"yes","see":1,"at":".kid-result:nth-child(3)"}' title="Sam yes"></iframe></div></div></figure>
+    <figure><figcaption>2. The notes<small>Illustrations; the actual amount may differ</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"],["Sam","19","M","no","yes"]],"province":"ON","income":"yes","see":1,"at":"result-notes","nudge":-300}' title="Notes"></iframe></div></div></figure>
+    <figure><figcaption>3. Only children aged 18 to 20<small>Sam (20) not sure, Ella (18) no</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Sam","20","M","no","unsure"],["Ella","18","F","no","no"]],"province":"ON","see":1}' title="Unsure"></iframe></div></div></figure>
+    <figure><figcaption>4. Above the limit today<small>Sam (19) still qualifies from earlier years</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Sam","19","M","no","yes"]],"province":"ON","income":"no","see":1}' title="Over limit, Sam"></iframe></div></div></figure>
+  </div>
+
+  <h2>Above the income limit: the RESP</h2>
+  <div class="row">
+    <figure><figcaption>1. What is an RESP?<small>Shown after "not eligible"</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"no","see":1,"at":".resp-box"}' title="RESP intro"></iframe></div></div></figure>
+    <figure><figcaption>2. Tony (10)<small>$50, $100, $150 a month: deposits, CESG, growth</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"no","see":1,"at":".resp-box .resp-kid:nth-of-type(1)"}' title="RESP Tony"></iframe></div></div></figure>
+    <figure><figcaption>3. Mia (4)<small>Second child: purple</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"no","see":1,"at":".resp-box .resp-kid:nth-of-type(2)"}' title="RESP Mia"></iframe></div></div></figure>
+  </div>
+  <div class="row" style="margin-top:2.5rem">
+    <figure><figcaption>Leo (13)<small>CESG for fewer years at $50</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Leo","13","M","no"],["Ella","8","F","yes"],["Sam","16","M","no"]],"province":"ON","income":"no","see":1,"at":".resp-box .resp-kid:nth-of-type(1)"}' title="Leo"></iframe></div></div></figure>
+    <figure><figcaption>Ella has an RESP; Sam is 16<small>Done, and the over-15 note</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Leo","13","M","no"],["Ella","8","F","yes"],["Sam","16","M","no"]],"province":"ON","income":"no","see":1,"at":".resp-box .resp-kid:nth-of-type(2)"}' title="Ella Sam"></iframe></div></div></figure>
+  </div>
+
+  <h2>Additional programs</h2>
+  <div class="row">
+    <figure><figcaption>1. Below the results<small>One yes/no question</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1,"at":"more"}' title="Question"></iframe></div></div></figure>
+    <figure><figcaption>2. Yes tapped<small>Learning Access Grant, then Advantage Plus</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1,"more":"yes","at":"programs"}' title="Programs"></iframe></div></div></figure>
+    <figure><figcaption>3. Advantage Plus<small>An example for each child</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1,"more":"yes","at":"ap-kids"}' title="Examples"></iframe></div></div></figure>
+  </div>
+  <div class="row" style="margin-top:2.5rem">
+    <figure><figcaption>4. Below the examples<small>Description, then Book a call</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1,"more":"yes","at":"ap-why","nudge":-260}' title="Why"></iframe></div></div></figure>
+    <figure><figcaption>Older boy (14)<small>$50 is below the minimum at this age</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Sam","14","M","no"]],"province":"ON","income":"yes","see":1,"more":"yes","at":"ap-kids"}' title="Older boy"></iframe></div></div></figure>
+    <figure><figcaption>5. Bottom of the page<small>How to apply for the Bond</small></figcaption>
+      <div class="fit"><div class="phone"><iframe data-state='{"kids":[["Tony","10","M","no"],["Mia","4","F","no"]],"province":"ON","income":"yes","see":1,"more":"yes","at":"next-gov"}' title="Bottom"></iframe></div></div></figure>
+  </div>
+
+  <script>
+    function fit() {
+      var k = Math.min(1, (window.innerWidth - 40) / 1296);
+      document.querySelectorAll('.fit').forEach(function (b) {
+        b.style.width = 1296 * k + 'px'; b.style.height = 852 * k + 'px';
+        b.firstChild.style.transform = 'scale(' + k + ')';
+      });
+    }
+    fit(); window.addEventListener('resize', fit);
+    // Each phone loads the real tool and fills in the answers shown in its caption.
+    document.querySelectorAll('iframe[data-state]').forEach(function (f) {
+      var s = JSON.parse(f.dataset.state || '{}');
+      f.addEventListener('load', function () {
+        var d = f.contentDocument, w = f.contentWindow;
+        // ?still shows the finished charts without animation (for checking screenshots).
+        if (location.search.indexOf('still') > -1) { var st = d.createElement('style'); st.textContent = '*{animation:none!important;transition:none!important}'; d.head.appendChild(st); w.matchMedia = function () { return { matches: true }; }; w.IntersectionObserver = function (cb) { return { observe: function () { cb([{ isIntersecting: true }]); }, disconnect: function () {} }; }; }
+        w.Element.prototype.scrollIntoView = function () {};
+        var fo = w.HTMLElement.prototype.focus; w.HTMLElement.prototype.focus = function () { fo.call(this, { preventScroll: true }); };
+        var order = [];
+        if (s.kids) {
+          var mi = s.kids.filter(function (c) { return +c[1] < 18; }), ad = s.kids.filter(function (c) { return +c[1] >= 18; });
+          order = mi.concat(ad);
+          var k = d.getElementById('kids'); k.value = s.count || String(mi.length); k.dispatchEvent(new Event('change'));
+          d.querySelector('#adults-q > .quiz-options .quiz-opt[data-value="' + (ad.length ? 'yes' : 'no') + '"]').click();
+          if (ad.length) { var as = d.getElementById('adults'); as.value = String(ad.length); as.dispatchEvent(new Event('change')); }
+          order.forEach(function (c, i) {
+            var row = d.querySelectorAll('.kid-row')[i];
+            var n = row.querySelector('.kid-name'); n.value = c[0]; n.dispatchEvent(new Event('input'));
+            row = d.querySelectorAll('.kid-row')[i];
+            var a = row.querySelector('.kid-age'); a.value = c[1]; a.dispatchEvent(new Event('change'));
+            row = d.querySelectorAll('.kid-row')[i];
+            row.querySelector('.mf .quiz-opt[data-value="' + c[2] + '"]').click();
+          });
+        }
+        if (s.province) { var p = d.getElementById('province'); p.value = s.province; p.dispatchEvent(new Event('change')); }
+        if (s.income) d.querySelector('[data-key="income"] .quiz-opt[data-value="' + s.income + '"]').click();
+        order.forEach(function (c, i) {
+          var q = c[4] && d.querySelector('.past-q[data-i="' + i + '"]');
+          if (q) q.querySelector('.quiz-opt[data-value="' + c[4] + '"]').click();
+          var r = c[3] && d.querySelector('.resp-row[data-i="' + i + '"]');
+          if (r) r.querySelector('.quiz-opt[data-value="' + c[3] + '"]').click();
+        });
+        if (s.see) d.getElementById('see').click();
+        if (s.more) d.querySelector('#more .quiz-opt[data-value="' + s.more + '"]').click();
+        if (s.at) setTimeout(function () { w.scrollTo(0, (d.getElementById(s.at) || d.querySelector(s.at)).getBoundingClientRect().top + w.scrollY + (s.nudge || -12)); }, 900);
+      });
+      f.src = '/eligibility/';
+    });
+    if (location.search.indexOf('still') > -1) [1500, 3000, 6000].forEach(function (t) { setTimeout(function () { window.scrollTo(0, 0); }, t); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canada Learning Bond: Eligibility | LearningBonds.ca</title>
+  <meta name="description" content="Find out whether your child is eligible for the Canada Learning Bond, and how much your child could receive, including past years and education savings grants.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/favicon-256.png">
+  <link rel="stylesheet" href="/assets/style.css?v=14">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <img src="/assets/logo-flag.png" alt="" width="40" height="40">
+        <span><span class="brand-name">LearningBonds.ca</span><span class="brand-tag">Education savings information</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/">Learning Bond</a></li>
+          <li><a href="/education-savings-grant/">Education Savings Grant</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a class="nav-tool" href="/eligibility/" aria-current="page">Check My Eligibility</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-intro">
+      <div class="wrap">
+        <span class="eyebrow">Canada Learning Bond: Eligibility</span>
+        <h1>Is your child eligible?</h1>
+        <p class="lede">Answer a few questions to see how much your child could receive, including amounts from past years.</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="wrap">
+
+        <form class="quiz-box" id="quiz" novalidate>
+          <div class="quiz-q">
+            <label for="province">Which <strong>province or territory</strong> do you live in?</label>
+            <p class="hint">Residents of some provinces are entitled to provincial government entitlements to help fund their child's future post-secondary education.</p>
+            <select class="select" id="province" required>
+              <option value="">Select your province or territory…</option>
+              <option value="AB">Alberta</option>
+              <option value="BC">British Columbia</option>
+              <option value="MB">Manitoba</option>
+              <option value="NB">New Brunswick</option>
+              <option value="NL">Newfoundland and Labrador</option>
+              <option value="NS">Nova Scotia</option>
+              <option value="ON">Ontario</option>
+              <option value="PE">Prince Edward Island</option>
+              <option value="QC">Quebec</option>
+              <option value="SK">Saskatchewan</option>
+              <option value="NT">Northwest Territories</option>
+              <option value="NU">Nunavut</option>
+              <option value="YT">Yukon</option>
+            </select>
+          </div>
+          <div class="quiz-q">
+            <label for="kids">How many <strong>children under 18</strong> do you have?</label>
+            <p class="hint">The income limit for the Canada Learning Bond depends on the number of children in your family.</p>
+            <select class="select" id="kids" required>
+              <option value="">Select a number…</option>
+            </select>
+          </div>
+          <div class="quiz-q" id="adults-q">
+            <p class="q" id="adults-label">Do you have any <strong>children aged 18, 19 or 20</strong>?</p>
+            <p class="hint">Young adults aged 18 to 20 can apply for the Canada Learning Bond themselves until their 21st birthday.</p>
+            <div class="quiz-options" role="group" aria-labelledby="adults-label">
+              <button type="button" class="quiz-opt" data-value="yes" aria-pressed="false">Yes</button>
+              <button type="button" class="quiz-opt" data-value="no" aria-pressed="false">No</button>
+            </div>
+            <div class="sub-q" id="adults-count" hidden>
+              <label for="adults">How many?</label>
+              <select class="select" id="adults"></select>
+            </div>
+            <p class="hint none-note" id="none-note" hidden>The Canada Learning Bond is available to eligible children and young adults under the age of 21.</p>
+          </div>
+          <div class="quiz-q" id="kids-q" hidden>
+            <p class="q">Tell us about each <strong>child</strong>.</p>
+            <p class="hint">First name only. For illustration purposes only. Your child's name is not saved or shared.</p>
+            <p class="hint">The amount your child may qualify for depends on their age. Gender is requested only to help us provide relevant examples of other benefit programs at the end.</p>
+            <div class="kid-head" aria-hidden="true"><span>First name</span><span>Age</span><span>Gender</span></div>
+            <div id="kid-rows"></div>
+          </div>
+          <div class="quiz-q" data-key="income" hidden>
+            <p class="q" id="income-q">What is your <strong>family net income</strong>?</p>
+            <p class="hint">Eligibility for the Canada Learning Bond depends on your family's net income.</p>
+            <p class="hint">You can find your net income on line 23600 of your tax return. If you have a spouse or common-law partner, their net income must also be included.</p>
+            <div class="quiz-options stack" role="group" aria-labelledby="income-q">
+              <button type="button" class="quiz-opt" data-value="yes" aria-pressed="false" id="income-below"></button>
+              <button type="button" class="quiz-opt" data-value="no" aria-pressed="false" id="income-above"></button>
+            </div>
+          </div>
+          <div id="past-qs"></div>
+          <div class="quiz-q" id="resp-q-box" hidden>
+            <p class="q" id="resp-q">Does your child currently have a <strong>Registered Education Savings Plan (RESP)</strong>?</p>
+            <p class="hint">Knowing whether your child already has an RESP helps us determine the appropriate next steps.</p>
+            <div id="resp-rows"></div>
+          </div>
+          <div class="quiz-actions">
+            <button class="btn btn-wide" type="submit" id="see" disabled>View my unclaimed amounts <span aria-hidden="true">&rarr;</span></button>
+          </div>
+        </form>
+
+        <div class="result" id="result" hidden tabindex="-1">
+          <span class="eyebrow">Your results</span>
+          <div id="result-panel"></div>
+          <div id="kid-results"></div>
+          <div id="growth"></div>
+          <div id="resp-section"></div>
+          <div id="result-notes"></div>
+          <div class="more" id="more" hidden>
+            <p class="q" id="more-q">Are you interested in information about additional programs that may be helpful for your child's academic and/or financial future?</p>
+            <div class="quiz-options" role="group" aria-labelledby="more-q">
+              <button type="button" class="quiz-opt" data-value="yes" aria-pressed="false">Yes</button>
+              <button type="button" class="quiz-opt" data-value="no" aria-pressed="false">No</button>
+            </div>
+          </div>
+          <div class="programs" id="programs" hidden>
+            <div class="prog-card">
+              <h3>Learning Access Grant</h3>
+              <p>For children in grades 4 to 12. Up to $1,200 a year toward approved tutoring programs.</p>
+              <a class="btn" id="lag" href="#learning-access-grant-link-to-come" target="_blank" rel="noopener">Learn more</a>
+            </div>
+            <div class="prog-card">
+              <h3>Advantage Plus</h3>
+              <p>For children aged 18 and under. A program designed to help them financially in the future. It can be used for several different things.</p>
+              <div id="ap-kids"></div>
+              <p id="ap-why">It offers protection for your family in the case of an unexpected passing. If your child reaches 65, the projected cash value shows what it is expected to be worth.</p>
+              <p class="hint">For illustration purposes only. Projected values are not guaranteed.</p>
+              <a class="btn" id="book" href="#book-link-to-come">Book a call</a>
+            </div>
+          </div>
+          <div class="next-box" id="next-gov" hidden>
+            <h3>How to apply</h3>
+            <p>You can apply through an RESP provider of your choice. The Government of Canada explains how.</p>
+            <a class="btn" href="https://www.canada.ca/en/services/benefits/education/education-savings/opening-plan.html" target="_blank" rel="noopener">See how to apply</a>
+          </div>
+          <button class="restart" type="button" id="restart">Start again</button>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand"><img src="/assets/logo-flag.png" alt="" width="32" height="32"> LearningBonds.ca</div>
+          <p>An education savings resource that helps Canadian families collect the Canada Learning Bond and education savings grants.</p>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/eligibility/">Check My Eligibility</a></li>
+            <li><a href="/">Canada Learning Bond</a></li>
+            <li><a href="/education-savings-grant/">Education Savings Grant</a></li>
+            <li><a href="/faq/">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>About</h2>
+          <ul>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/privacy-policy/">Privacy</a></li>
+            <li><a href="/terms-of-use/">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; LearningBonds.ca 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var b = document.querySelector('.nav-toggle'), n = document.getElementById('site-nav');
+      if (!b || !n) return;
+      b.addEventListener('click', function () {
+        var open = n.classList.toggle('open');
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    })();
+  </script>
+  <script src="/assets/advantage-plus-data.js?v=1"></script>
+  <script src="/assets/eligibility.js?v=15"></script>
+</body>
+</html>
