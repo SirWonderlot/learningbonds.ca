@@ -22,6 +22,7 @@
     .home-hero h1 { padding: 1.1rem 1.25rem; color: var(--accent); font-weight: 400; font-size: 2.35rem; line-height: 1.2; }
     .home-hero .lede { padding: 1rem 1.6rem 1.25rem; color: var(--link); font-size: 1.25rem; line-height: 1.6; max-width: none; }
     .home-hero .lede .l { display: block; }
+    .home-hero .lede b { font-weight: 600; }
     .home-hero .lede .l + .l { margin-top: .3rem; }
     .hero-go { text-align: center; padding-top: 2rem; padding-bottom: 2.5rem; }
     @media (max-width: 640px) {
@@ -52,9 +53,12 @@
       .motto { padding-bottom: 2rem; }
       .motto-panel { padding: 3rem 1.25rem 3.25rem; }
       .motto-text { font-size: 1.5rem; line-height: 1.45; }
+      .motto-text .nw { white-space: normal; }
     }
     /* Desktop: no button under the photo (Todd, 2026-11-19). Phones keep it for now. */
-    @media (min-width: 641px) { .hero-go { display: none; } .motto:first-of-type { margin-top: 2rem; } }
+    .hero-go { display: none; } /* phones too, to try it (Todd, 2026-11-19) */
+    @media (min-width: 641px) { .motto:first-of-type { margin-top: 2rem; } }
+    @media (max-width: 640px) { .motto:first-of-type { margin-top: 1.75rem; } }
     /* FAQ: same grey panel; each question opens and closes, with a plus sign on the right. */
     .faq-home { padding-top: .5rem; }
     .faq-home .motto-panel { padding-top: 3.5rem; padding-bottom: 3.5rem; }
@@ -100,7 +104,7 @@
       <div class="hero-photo">
         <div class="hero-text">
           <h1>Canada Learning Bond</h1>
-          <p class="lede"><span class="l">Receive up to $2,000 in free deposits from the <span class="nw">Federal Government of Canada.</span></span><span class="l">There are no fees to use this service.</span></p>
+          <p class="lede"><span class="l">Receive <b>up to $2,000 in free deposits</b> from the <span class="nw">Federal Government of Canada.</span></span><span class="l">There are no fees to use this service.</span></p>
         </div>
       </div>
       <div class="wrap hero-go">
