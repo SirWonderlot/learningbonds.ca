@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>RESP Calculator | LearningBonds.ca</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="stylesheet" href="/assets/style.css?v=14">
+  <style>
+    .rc { padding: 1.75rem 0 3rem; }
+    .rc h1 { margin: 0 0 .25rem; font-size: clamp(1.8rem, 3.5vw, 2.3rem); }
+    .rc-sub { margin: 0 0 1.5rem; color: var(--muted); max-width: none; }
+    .rc-grid { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: 1.5rem; align-items: start; }
+    @media (max-width: 960px) { .rc-grid { grid-template-columns: 1fr; } }
+
+    .rc-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem 1.35rem; }
+    .rc-form h2 { font-size: 1.05rem; margin: 0 0 .1rem; color: var(--link); text-transform: uppercase; letter-spacing: .04em; }
+    .rc-form h2:not(:first-child) { margin-top: 1.1rem; }
+    .rc-field { padding: .6rem 0; border-top: 1px solid var(--line); }
+    .rc-form h2 + .rc-field { border-top: 0; }
+    .rc-field[hidden] { display: none; }
+    .rc-field label { display: block; font-weight: 600; color: var(--ink); font-size: 1rem; line-height: 1.3; margin-bottom: .35rem; }
+    .rc-field small { display: block; font-weight: 400; color: var(--muted); font-size: .88rem; line-height: 1.35; margin-top: .1rem; }
+    .rc-field input, .rc-field select { font: inherit; font-size: 1.05rem; padding: .4rem .65rem; border: 1px solid #b8c3ce; border-radius: 8px; background: #fff; color: var(--ink); width: 100%; min-height: 42px; }
+    .rc-field input:focus, .rc-field select:focus { outline: 3px solid var(--note-line); outline-offset: 1px; border-color: var(--link); }
+    .rc-money { position: relative; }
+    .rc-money::before { content: "$"; position: absolute; left: .65rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 1.05rem; pointer-events: none; }
+    .rc-money input { padding-left: 1.45rem; }
+    .rc-two { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; align-items: end; }
+    .rc-two label { font-weight: 400; font-size: .9rem; color: var(--muted); margin-bottom: .2rem; }
+    .rc-err { color: #b42318; font-size: .92rem; margin: .35rem 0 0; }
+    .rc-err:empty { display: none; }
+    .rc-field.bad input { border-color: #b42318; }
+
+    .rc-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
+    @media (max-width: 700px) { .rc-tiles { grid-template-columns: 1fr; } }
+    .rc-tile { background: var(--note-bg); border-radius: var(--radius); padding: 1rem 1.1rem; }
+    .rc-tile .k { font-size: .95rem; color: var(--text); font-weight: 600; line-height: 1.3; }
+    .rc-tile .v { font-size: clamp(1.9rem, 3.2vw, 2.4rem); font-weight: 700; color: var(--ink); line-height: 1.15; margin: .3rem 0 .2rem; font-variant-numeric: tabular-nums; }
+    .rc-tile .s { font-size: .9rem; color: var(--muted); line-height: 1.35; }
+
+    .rc-note { margin: .9rem 0 0; padding: .7rem .95rem; background: #fff8e6; border: 1px solid #ecd9a3; border-radius: 8px; font-size: .98rem; max-width: none; color: var(--ink); }
+    .rc-note[hidden] { display: none; }
+
+    .rc-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1.5rem; margin-top: 1rem; }
+    @media (max-width: 700px) { .rc-cols { grid-template-columns: 1fr; } }
+    .rc-list h3 { font-size: 1rem; margin: .4rem 0 .2rem; color: var(--link); }
+    .rc-list dl { margin: 0; }
+    .rc-list .row { display: flex; justify-content: space-between; gap: 1rem; padding: .38rem 0; border-top: 1px solid var(--line); font-size: 1rem; }
+    .rc-list .row dt { color: var(--text); }
+    .rc-list .row dd { margin: 0; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .rc-list .row.total { border-top: 2px solid var(--ink); }
+
+    .rc-chart { margin-top: 1rem; }
+    .rc-chart h3 { font-size: 1rem; margin: 0 0 .4rem; color: var(--link); }
+    .rc-plot { position: relative; height: 260px; }
+    .rc-plot svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .rc-plot .grid line { stroke: var(--surface-2); stroke-width: 1; }
+    .rc-plot .axis text { fill: var(--muted); font-size: 12px; font-family: var(--font); }
+    .rc-tip { position: absolute; pointer-events: none; background: var(--ink); color: #fff; font-size: .88rem; line-height: 1.35; padding: .4rem .6rem; border-radius: 6px; white-space: nowrap; transform: translate(-50%, -110%); opacity: 0; transition: opacity .1s; }
+    .rc-tip b { font-weight: 600; }
+
+    .rc-details { margin-top: 1rem; }
+    .rc-details summary { cursor: pointer; font-weight: 600; color: var(--link); font-size: 1rem; }
+    .rc-table-wrap { overflow-x: auto; margin-top: .6rem; }
+    .rc-table { border-collapse: collapse; width: 100%; font-size: .9rem; font-variant-numeric: tabular-nums; }
+    .rc-table th, .rc-table td { padding: .3rem .5rem; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    .rc-table th { font-weight: 600; color: var(--ink); background: var(--surface); position: sticky; top: 0; }
+    .rc-table td:first-child, .rc-table th:first-child { text-align: left; }
+    .rc-table tr.start td { background: var(--note-bg); }
+    .rc-key { margin: .5rem 0 0; font-size: .9rem; color: var(--muted); max-width: none; }
+    .rc-key span { display: inline-block; width: .9em; height: .9em; background: var(--note-bg); border: 1px solid var(--note-line); border-radius: 2px; vertical-align: -.1em; margin-right: .35rem; }
+
+    .rc-foot { margin-top: 1.25rem; font-size: .88rem; color: var(--muted); max-width: none; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <span class="brand">
+        <img src="/assets/logo-flag.png" alt="" width="40" height="40">
+        <span><span class="brand-name">LearningBonds.ca</span><span class="brand-tag">Education savings information</span></span>
+      </span>
+    </div>
+  </header>
+
+  <main id="main" class="wrap rc">
+    <h1>RESP Calculator</h1>
+    <p class="rc-sub">Estimated grants, bonds and growth in a Registered Education Savings Plan, up to age 25.</p>
+
+    <div class="rc-grid">
+      <form class="rc-card rc-form" id="form" autocomplete="off" onsubmit="return false">
+        <h2>About the child</h2>
+        <div class="rc-field" id="f-age">
+          <label for="age">Current age</label>
+          <input id="age" type="number" inputmode="numeric" min="0" max="17" value="5">
+          <p class="rc-err"></p>
+        </div>
+        <div class="rc-field" id="f-opened">
+          <label for="opened">Year the RESP is opened</label>
+          <input id="opened" type="number" inputmode="numeric">
+          <small>Grant room builds up from the year they are born, even without an RESP.</small>
+          <p class="rc-err"></p>
+        </div>
+        <div class="rc-field" id="f-fam">
+          <label for="fam">Family net income</label>
+          <div class="rc-money"><input id="fam" type="text" inputmode="numeric" value="50,000"></div>
+          <small>Their parents’ net income, both added together.</small>
+        </div>
+        <div class="rc-field" id="f-kids">
+          <label for="kids">Children under 18 in the family</label>
+          <select id="kids"></select>
+          <small>The Canada Learning Bond income limit depends on the number of children.</small>
+        </div>
+
+        <h2>Contributions</h2>
+        <div class="rc-field" id="f-contrib">
+          <label for="contrib">Yearly contribution</label>
+          <div class="rc-money"><input id="contrib" type="text" inputmode="numeric" value="2,500"></div>
+          <small>$2,500 a year gets the full $500 basic grant. Up to $5,000 a year catches up unused grant room.</small>
+        </div>
+        <div class="rc-field" id="f-until">
+          <label for="until">Contribute until age</label>
+          <input id="until" type="number" inputmode="numeric" min="0" max="25" value="17">
+          <small>Grants stop at the end of the year they turn 17.</small>
+          <p class="rc-err"></p>
+        </div>
+        <div class="rc-field">
+          <label for="rate">Yearly growth</label>
+          <select id="rate"></select>
+        </div>
+      </form>
+
+      <section aria-live="polite">
+        <div class="rc-tiles">
+          <div class="rc-tile">
+            <div class="k">Government grants and bonds</div>
+            <div class="v" id="t-gov">$0</div>
+            <div class="s" id="t-gov-s"></div>
+          </div>
+          <div class="rc-tile">
+            <div class="k">Plan value at age 18</div>
+            <div class="v" id="t-18">$0</div>
+            <div class="s" id="t-18-s"></div>
+          </div>
+          <div class="rc-tile">
+            <div class="k">Plan value at age 25</div>
+            <div class="v" id="t-25">$0</div>
+            <div class="s" id="t-25-s"></div>
+          </div>
+        </div>
+
+        <p class="rc-note" id="note" hidden></p>
+
+        <div class="rc-card rc-chart">
+          <h3>Plan value by age</h3>
+          <div class="rc-plot" id="plot"><div class="rc-tip" id="tip"></div></div>
+        </div>
+
+        <div class="rc-cols">
+          <div class="rc-list">
+            <h3>Government money</h3>
+            <dl id="l-gov"></dl>
+          </div>
+          <div class="rc-list">
+            <h3>The plan</h3>
+            <dl id="l-plan"></dl>
+          </div>
+        </div>
+
+        <details class="rc-details">
+          <summary>Year by year</summary>
+          <div class="rc-table-wrap"><table class="rc-table" id="table"></table></div>
+          <p class="rc-key" id="key"></p>
+        </details>
+
+        <p class="rc-foot" id="foot"></p>
+      </section>
+    </div>
+  </main>
+
+  <script>
+  (function () {
+    // ---- Federal limits (update each year) ----
+    // Checked on canada.ca on 2026-11-16:
+    //   CESG: CRA page "Canada Education Savings Grant (CESG)" and ESDC "How much money benefits could add to the RESP".
+    //   Additional CESG brackets for 2026: ESDC Notice #1114.
+    //   Canada Learning Bond: CRA page "Canada Learning Bond"; income brackets July 2026 to June 2027: ESDC Notice #1138.
+    //   Contribution limit: CRA page "RESP contributions".
+    // Income limits rise each year with inflation; these are the 2026 figures, held flat in the projection.
+    var LIMITS_YEAR = 2026;
+    var L = {
+      grantRate: 0.20,          // basic CESG: 20% of contributions
+      grantYear: 500,           // grant room added each year the child is under 18 (2007 and later), even with no RESP
+      grantYearMax: 1000,       // most basic CESG in one year when there is unused room (20% of $5,000)
+      grantLifetime: 7200,      // lifetime CESG, basic and additional together
+      extraOn: 500,             // additional CESG applies to the first $500 contributed each year; it does not carry forward
+      extraHigh: 58523,         // up to this income: additional 20% ($100)
+      extraLow: 117045,         // above extraHigh up to this income: additional 10% ($50); above it: none
+      lastGrantAge: 17,         // CESG paid until the end of the year they turn 17
+      lateAge: 16,              // at 16 and 17, CESG only if, by the end of the year they turned 15, $2,000 was
+      lateTotal: 2000,          // contributed, or at least $100 a year in four years
+      lateYearly: 100, lateYears: 4,
+      bondFirst: 500,           // Canada Learning Bond: $500 for the first eligible year,
+      bondYear: 100,            // then $100 a year,
+      bondLastAge: 15,          // up to the year they turn 15,
+      bondLifetime: 2000,       // at most $2,000,
+      bondOpening: 25,          // plus $25 paid with the first $500 for the cost of opening the RESP
+      bondFirstBirth: 2004,     // for children born in 2004 or later; no contributions needed; paid back to the first year
+      bondBeforeAge: 21,        // it must be requested before they turn 21
+      // Bond income limit by number of children, July 1, 2026 to June 30, 2027. 1 to 3: at or below; 4 or more: below.
+      bondIncome: { 1: 58523, 2: 58523, 3: 58523, 4: 66036, 5: 73577, 6: 81117, 7: 88658, 8: 96198,
+        9: 103739, 10: 111279, 11: 118820, 12: 126360, 13: 133901, 14: 141442, 15: 148982, 16: 156523 },
+      contribLifetime: 50000,   // lifetime contributions per child; grants and bonds do not count toward it
+      endAge: 25,               // the plan is shown growing to 25: not everyone starts school at 18
+      inflation: 0.02           // for "today's dollars"
+    };
+    var NOW = new Date().getFullYear();
+
+    var $ = function (id) { return document.getElementById(id); };
+    var money = function (n) { return '$' + Math.round(n || 0).toLocaleString('en-CA'); };
+    var num = function (el) { var v = String(el.value).replace(/[^\d.]/g, ''); return v === '' ? null : Number(v); };
+    var int = function (el) { var v = String(el.value).trim(); return v === '' ? null : Math.round(Number(v)); };
+
+    var rates = [[0.11, '11%'], [0.09, '9%'], [0.07, '7%'], [0.05, '5%'], [0.03, '3%'], [0.01, '1%']];
+    $('rate').innerHTML = rates.map(function (r) { return '<option value="' + r[0] + '">' + r[1] + '</option>'; }).join('');
+    $('rate').value = '0.05';
+    var kidOpts = '';
+    for (var k = 1; k <= 16; k++) kidOpts += '<option value="' + k + '">' + k + '</option>';
+    $('kids').innerHTML = kidOpts;
+    $('opened').value = NOW;
+
+    // Additional CESG rate on the first $500 contributed in a year.
+    function extraRate(income) {
+      if (income <= L.extraHigh) return 0.20;
+      if (income <= L.extraLow) return 0.10;
+      return 0;
+    }
+    function bondEligible(income, kids) {
+      var lim = L.bondIncome[Math.min(kids, 16)];
+      return kids <= 3 ? income <= lim : income < lim;
+    }
+
+    // ---- The projection, one calendar year at a time ----
+    function project(i) {
+      var birth = NOW - i.age;
+      var ageIn = function (yr) { return yr - birth; };
+      var last = birth + L.endAge;
+      var bondOk = birth >= L.bondFirstBirth && bondEligible(i.fam, i.kids);
+
+      var room = 0;          // unused basic grant room carried forward
+      var owed = 0;          // bond earned but not yet paid (paid once the RESP is open)
+      var bondYears = 0;     // eligible bond years so far
+      var rows = [], basic = 0, extra = 0, bonds = 0, contribs = 0;
+      var by15 = 0, years100 = 0;   // for the age 16 and 17 rule
+
+      for (var yr = birth; yr <= last; yr++) {
+        var a = ageIn(yr);
+        if (a <= L.lastGrantAge) room += L.grantYear;
+        if (bondOk && a <= L.bondLastAge) {
+          owed += bondYears ? L.bondYear : L.bondFirst + L.bondOpening;
+          bondYears++;
+        }
+        if (yr < i.opened) continue;
+
+        var row = { year: yr, age: a, contrib: 0, basic: 0, extra: 0, bond: 0, gain: 0, value: 0 };
+        if (a <= i.until) {
+          row.contrib = Math.max(0, Math.min(i.contrib, L.contribLifetime - contribs));
+          contribs += row.contrib;
+        }
+        if (a <= 15) { by15 += row.contrib; if (row.contrib >= L.lateYearly) years100++; }
+        var grantOk = a <= L.lastGrantAge && (a < L.lateAge || by15 >= L.lateTotal || years100 >= L.lateYears);
+        if (grantOk) {
+          var cap = L.grantLifetime - basic - extra;
+          row.basic = Math.min(row.contrib * L.grantRate, room, L.grantYearMax, cap);
+          room -= row.basic; basic += row.basic;
+          row.extra = Math.min(Math.min(row.contrib, L.extraOn) * extraRate(i.fam), cap - row.basic);
+          extra += row.extra;
+        }
+        // The bond, including any earned before the plan was opened, within the lifetime limit (plus the $25).
+        if (owed > 0 && a < L.bondBeforeAge) {
+          var bondCap = L.bondLifetime + L.bondOpening - bonds;
+          row.bond = Math.min(owed, bondCap); owed = 0; bonds += row.bond;
+        }
+        rows.push(row);
+      }
+      // Room still unused after the year they turn 17 is lost.
+      var lostRoom = Math.min(room, Math.max(0, L.grantLifetime - basic - extra));
+
+      var prevValue = 0;
+      rows.forEach(function (r) {
+        var base = prevValue + r.contrib + r.basic + r.extra + r.bond;
+        r.gain = base * i.rate;
+        r.value = base + r.gain;
+        r.today = r.value / Math.pow(1 + L.inflation, Math.max(0, r.year - NOW));
+        prevValue = r.value;
+      });
+
+      var sum = function (list, key) { return list.reduce(function (t, r) { return t + r[key]; }, 0); };
+      var at = function (age) { return rows.filter(function (r) { return r.age === age; })[0] || { value: 0, today: 0 }; };
+      var firstRow = rows[0] || {};
+      return {
+        rows: rows, openAge: ageIn(i.opened),
+        basic: basic, extra: extra, grants: basic + extra, bonds: bonds, contribs: contribs, lostRoom: lostRoom,
+        firstGrant: (firstRow.basic || 0) + (firstRow.extra || 0), firstBond: firstRow.bond || 0,
+        lateBlocked: rows.some(function (r) { return r.age >= L.lateAge && r.age <= L.lastGrantAge && r.contrib > 0 && !r.basic && !r.extra; }) && basic + extra < L.grantLifetime,
+        contribTo18: sum(rows.filter(function (r) { return r.age <= 18; }), 'contrib'),
+        gainTo18: sum(rows.filter(function (r) { return r.age <= 18; }), 'gain'),
+        gainAfter18: sum(rows.filter(function (r) { return r.age > 18; }), 'gain'),
+        contribAfter18: sum(rows.filter(function (r) { return r.age > 18; }), 'contrib'),
+        at18: at(18), at25: at(L.endAge)
+      };
+    }
+
+    // ---- Reading the form ----
+    function setErr(id, msg) {
+      var f = $(id); f.classList.toggle('bad', !!msg); f.querySelector('.rc-err').textContent = msg || '';
+    }
+    function read() {
+      var i = {
+        age: int($('age')), opened: int($('opened')), fam: num($('fam')) || 0, kids: Number($('kids').value),
+        contrib: num($('contrib')) || 0, until: int($('until')), rate: Number($('rate').value)
+      };
+      var ok = true;
+      ['f-age', 'f-opened', 'f-until'].forEach(function (id) { setErr(id, ''); });
+      if (i.age == null || i.age < 0 || i.age > 17) { setErr('f-age', 'Enter an age from 0 to 17.'); ok = false; }
+      if (i.opened == null) { setErr('f-opened', 'Enter a year.'); ok = false; }
+      else if (i.age != null && i.opened < NOW - i.age) { setErr('f-opened', 'That is before they were born.'); ok = false; }
+      else if (i.age != null && i.opened - (NOW - i.age) > L.endAge) { setErr('f-opened', 'This calculator goes up to age 25.'); ok = false; }
+      if (i.until == null) i.until = 17;
+      if (i.until < 0 || i.until > L.endAge) { setErr('f-until', 'Enter an age up to 25.'); ok = false; }
+      return ok ? i : null;
+    }
+
+    // ---- Showing the results ----
+    function rowsHTML(list) {
+      return list.map(function (r) {
+        return '<div class="row' + (r[2] ? ' total' : '') + '"><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>';
+      }).join('');
+    }
+    function render() {
+      var i = read();
+      if (!i) return;
+      var p = project(i);
+
+      $('t-gov').textContent = money(p.grants + p.bonds);
+      $('t-gov-s').textContent = money(p.grants) + ' in grants and ' + money(p.bonds) + ' in bonds';
+      $('t-18').textContent = money(p.at18.value);
+      $('t-18-s').textContent = money(p.at18.today) + ' in today’s dollars';
+      $('t-25').textContent = money(p.at25.value);
+      $('t-25-s').textContent = money(p.at25.today) + ' in today’s dollars';
+
+      var note = '';
+      if (p.lostRoom >= 1) {
+        note = money(p.lostRoom) + ' of grant room goes unused. Contributing up to $5,000 a year collects up to $1,000 of the basic grant a year, until the end of the year they turn 17.';
+      }
+      if (p.lateBlocked) {
+        note = 'No grant is paid at 16 and 17 here. At those ages the grant needs $2,000 contributed by the end of the year they turned 15, or at least $100 a year in four years before then.' + (note ? ' ' + note : '');
+      }
+      if (p.openAge > L.lastGrantAge) note = 'Grants are only paid until the end of the year they turn 17, so this plan gets no grants.';
+      $('note').hidden = !note; $('note').textContent = note;
+
+      var gov = [
+        ['Basic grant (CESG)', money(p.basic)],
+        ['Additional grant', money(p.extra)],
+        ['Canada Learning Bond', money(p.bonds)],
+        ['Total from the government', money(p.grants + p.bonds), true]
+      ];
+      if (p.rows.length) {
+        gov.push(['Grant in the first year (' + p.rows[0].year + ')', money(p.firstGrant)]);
+        gov.push(['Bond in the first year (' + p.rows[0].year + ')', money(p.firstBond)]);
+      }
+      gov.push(['Grant room left unused', money(p.lostRoom)]);
+      $('l-gov').innerHTML = rowsHTML(gov);
+
+      var plan = [
+        ['Your contributions to 18', money(p.contribTo18)],
+        ['Grants and bonds received', money(p.grants + p.bonds)],
+        ['Growth to 18', money(p.gainTo18)],
+        ['Value at age 18', money(p.at18.value), true]
+      ];
+      if (p.contribAfter18) plan.push(['Your contributions after 18', money(p.contribAfter18)]);
+      plan.push(['Growth from 18 to 25', money(p.gainAfter18)]);
+      plan.push(['Value at age 25', money(p.at25.value), true]);
+      $('l-plan').innerHTML = rowsHTML(plan);
+
+      table(p);
+      chart(p);
+      $('foot').textContent = 'Estimates only, using ' + LIMITS_YEAR + ' government limits. Income limits rise each year with inflation and are assumed to stay the same here, as is family income. ' +
+        'The Canada Learning Bond assumes the family qualifies every year and that it is requested; bond amounts earned before the plan is opened are paid when it opens. ' +
+        'Contributions are made at the start of each year. Nothing is taken out of the plan before 25. ' +
+        'Today’s dollars assume 2% inflation a year. Growth is not guaranteed.';
+    }
+
+    function table(p) {
+      var h = '<thead><tr><th>Year</th><th>Age</th><th>Contribution</th><th>Grant</th><th>Bond</th><th>Growth</th><th>Value</th></tr></thead><tbody>';
+      p.rows.forEach(function (r) {
+        h += '<tr' + (r.age === 18 ? ' class="start"' : '') + '><td>' + r.year + '</td><td>' + r.age + '</td><td>' + money(r.contrib) + '</td><td>' + money(r.basic + r.extra) +
+          '</td><td>' + money(r.bond) + '</td><td>' + money(r.gain) + '</td><td>' + money(r.value) + '</td></tr>';
+      });
+      $('table').innerHTML = h + '</tbody>';
+      $('key').innerHTML = p.rows.some(function (r) { return r.age === 18; }) ? '<span></span>Shaded: age 18.' : '';
+    }
+
+    // ---- Chart: plan value by age ----
+    var lastP = null;
+    function chart(p) {
+      lastP = p;
+      var box = $('plot'), tip = $('tip');
+      var W = box.clientWidth, H = box.clientHeight;
+      var m = { l: 62, r: 14, t: 20, b: 28 };
+      var rows = p.rows;
+      if (rows.length < 2) { box.querySelectorAll('svg').forEach(function (s) { s.remove(); }); return; }
+      var max = Math.max.apply(null, rows.map(function (r) { return r.value; })) || 1;
+      var step = niceStep(max / 4), top = Math.ceil(max / step) * step;
+      var a0 = rows[0].age, a1 = rows[rows.length - 1].age;
+      var x = function (a) { return m.l + (a - a0) / (a1 - a0) * (W - m.l - m.r); };
+      var y = function (v) { return H - m.b - v / top * (H - m.t - m.b); };
+      var blue = getComputedStyle(document.documentElement).getPropertyValue('--link').trim() || '#1a4d8f';
+
+      var s = '<svg role="img" aria-label="Plan value by age, peaking at ' + money(max) + '">';
+      s += '<g class="grid">';
+      for (var v = 0; v <= top; v += step) s += '<line x1="' + m.l + '" x2="' + (W - m.r) + '" y1="' + y(v) + '" y2="' + y(v) + '"/>';
+      s += '</g><g class="axis">';
+      for (v = 0; v <= top; v += step) s += '<text x="' + (m.l - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + short(v) + '</text>';
+      var ageStep = (a1 - a0) > 12 ? 5 : (a1 - a0) > 6 ? 2 : 1;
+      for (var a = Math.ceil(a0 / ageStep) * ageStep; a <= a1; a += ageStep) s += '<text x="' + x(a) + '" y="' + (H - 8) + '" text-anchor="middle">' + a + '</text>';
+      s += '</g>';
+      var line = rows.map(function (r, n) { return (n ? 'L' : 'M') + x(r.age).toFixed(1) + ' ' + y(r.value).toFixed(1); }).join(' ');
+      s += '<path d="' + line + ' L' + x(a1) + ' ' + y(0) + ' L' + x(a0) + ' ' + y(0) + ' Z" fill="' + blue + '" fill-opacity=".12"/>';
+      s += '<path d="' + line + '" fill="none" stroke="' + blue + '" stroke-width="2" stroke-linejoin="round"/>';
+      if (18 > a0 && 18 < a1) {
+        s += '<line x1="' + x(18) + '" x2="' + x(18) + '" y1="' + m.t + '" y2="' + y(0) + '" stroke="#5a6876" stroke-width="1" stroke-dasharray="4 4"/>';
+        s += '<text x="' + (x(18) - 6) + '" y="' + (m.t + 2) + '" text-anchor="end" fill="#2e3a46" font-size="12" font-family="inherit">Age 18</text>';
+      }
+      s += '<line id="cross" x1="0" x2="0" y1="' + m.t + '" y2="' + y(0) + '" stroke="#1c2630" stroke-width="1" opacity="0"/>';
+      s += '<circle id="dot" r="5" fill="' + blue + '" stroke="#fff" stroke-width="2" opacity="0"/>';
+      s += '<rect x="' + m.l + '" y="0" width="' + (W - m.l - m.r) + '" height="' + (H - m.b) + '" fill="transparent" id="hit"/>';
+      s += '</svg>';
+      box.querySelectorAll('svg').forEach(function (el) { el.remove(); });
+      box.insertAdjacentHTML('afterbegin', s);
+
+      var hit = box.querySelector('#hit'), cross = box.querySelector('#cross'), dot = box.querySelector('#dot');
+      function show(evt) {
+        var rect = box.getBoundingClientRect();
+        var px = (evt.touches ? evt.touches[0].clientX : evt.clientX) - rect.left;
+        var age = Math.round(a0 + (px - m.l) / (W - m.l - m.r) * (a1 - a0));
+        var r = rows.filter(function (q) { return q.age === age; })[0];
+        if (!r) return;
+        cross.setAttribute('x1', x(age)); cross.setAttribute('x2', x(age)); cross.setAttribute('opacity', '.35');
+        dot.setAttribute('cx', x(age)); dot.setAttribute('cy', y(r.value)); dot.setAttribute('opacity', '1');
+        tip.innerHTML = 'Age ' + r.age + ' (' + r.year + ')<br><b>' + money(r.value) + '</b>';
+        tip.style.left = Math.min(Math.max(x(age), 70), W - 70) + 'px'; tip.style.top = y(r.value) + 'px'; tip.style.opacity = 1;
+      }
+      function hide() { cross.setAttribute('opacity', '0'); dot.setAttribute('opacity', '0'); tip.style.opacity = 0; }
+      hit.addEventListener('mousemove', show); hit.addEventListener('touchstart', show, { passive: true }); hit.addEventListener('touchmove', show, { passive: true });
+      hit.addEventListener('mouseleave', hide);
+    }
+    function niceStep(raw) {
+      var p = Math.pow(10, Math.floor(Math.log10(raw || 1))), n = raw / p;
+      return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10) * p;
+    }
+    function short(v) {
+      if (v >= 1e6) return '$' + (v / 1e6).toFixed(v % 1e6 ? 1 : 0) + 'M';
+      if (v >= 1e3) return '$' + Math.round(v / 1e3) + 'K';
+      return '$' + v;
+    }
+
+    // Money fields show commas when you leave them.
+    ['fam', 'contrib'].forEach(function (id) {
+      $(id).addEventListener('blur', function () { var n = num(this); this.value = n == null ? '' : Math.round(n).toLocaleString('en-CA'); });
+    });
+    $('form').addEventListener('input', render);
+    $('form').addEventListener('change', render);
+    var rz; window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { if (lastP) chart(lastP); }, 100); });
+    window.respProject = project; // for testing
+    render();
+  })();
+  </script>
+</body>
+</html>
