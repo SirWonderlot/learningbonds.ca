@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mock-up: new home page | LearningBonds.ca</title>
+  <meta name="description" content="The Canada Learning Bond: receive up to $2,000 in free deposits from the Federal Government of Canada. There are no fees to apply. Check your child's eligibility.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/favicon-256.png">
+  <link rel="stylesheet" href="/assets/style.css?v=14">
+  <script>document.documentElement.classList.add('js')</script>
+  <style>
+    /* Mock-up: same hero as rdspcanada.ca. Desktop: the Parliament photo with the title and text in two white boxes.
+       Phones: the photo sits on top and fades into the text below it. */
+    .home-hero { padding: 12px 0 0; }
+    .hero-photo { max-width: calc(var(--max) + 3rem); height: 520px; margin: 0 auto; padding: 1.5rem;
+      background: var(--surface-2) url("/assets/parliament.webp") center / cover no-repeat;
+      display: flex; align-items: center; justify-content: center; }
+    .hero-text { width: 100%; max-width: 600px; display: grid; gap: 10px; text-align: center; }
+    .home-hero h1, .home-hero .lede { margin: 0; background: rgba(255,255,255,.94); border: 1px solid rgba(28,38,48,.18); text-wrap: balance; }
+    .home-hero h1 { padding: 1.1rem 1.25rem; color: var(--accent); font-weight: 400; font-size: 2.35rem; line-height: 1.2; }
+    .home-hero .lede { padding: 1rem 1.6rem 1.25rem; color: var(--link); font-size: 1.25rem; line-height: 1.6; max-width: none; }
+    .home-hero .lede .l { display: block; }
+    .home-hero .lede .l + .l { margin-top: .3rem; }
+    .hero-go { text-align: center; padding-top: 2rem; padding-bottom: 2.5rem; }
+    @media (max-width: 640px) {
+      .home-hero { padding: 0; }
+      .hero-photo { position: relative; height: auto; display: block; padding: 275px 1.25rem 0;
+        background-color: var(--bg); background-position: 30% top; background-size: auto 300px; }
+      .hero-photo::before { content: ""; position: absolute; inset: 0;
+        background: linear-gradient(rgba(255,255,255,0) 160px, var(--bg) 285px); }
+      .hero-text { position: relative; display: block; text-align: left; max-width: none; }
+      .home-hero h1, .home-hero .lede { background: none; border: 0; padding: 0; text-wrap: pretty; }
+      .home-hero h1 { font-size: 2.1rem; line-height: 1.1; margin: 0 0 1rem; }
+      .home-hero .lede { color: var(--text); font-size: 1.1rem; }
+      .hero-go { text-align: left; padding-top: 1.75rem; padding-bottom: 2rem; }
+    }
+    @media (max-width: 480px) { .hero-photo { padding-left: 1rem; padding-right: 1rem; } }
+    /* Section 2: "What is the Canada Learning Bond (CLB)?" as on the old site: a grey panel with large centred text. */
+    .motto { padding: 0 0 2.5rem; }
+    .motto-panel { max-width: calc(var(--max) + 3rem); margin: 0 auto; background: #f4f4f4; text-align: center; padding: 4.5rem 1.5rem 4.75rem; }
+    .motto-label { margin: 0 0 1rem; font-size: .85rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .motto-text { max-width: 900px; margin: 0 auto; font-size: 2.25rem; line-height: 1.4; font-weight: 400; color: var(--ink); text-wrap: balance; }
+    .motto-text + .motto-text { margin-top: .6rem; }
+    .motto-text b { font-weight: 600; }
+    @media (max-width: 767px) {
+      .motto { padding-bottom: 2rem; }
+      .motto-panel { padding: 3rem 1.25rem 3.25rem; }
+      .motto-text { font-size: 1.5rem; line-height: 1.45; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">
+        <img src="/assets/logo-flag.png" alt="" width="40" height="40">
+        <span><span class="brand-name">LearningBonds.ca</span><span class="brand-tag">Education savings information</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="/" aria-current="page">Learning Bond</a></li>
+          <li><a href="/education-savings-grant/">Education Savings Grant</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a class="nav-tool" href="/eligibility/">Check My Eligibility</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="home-hero">
+      <div class="hero-photo">
+        <div class="hero-text">
+          <h1>Canada Learning Bond</h1>
+          <p class="lede"><span class="l">Receive up to $2,000 in free deposits from the <span class="nw">Federal Government of Canada.</span></span><span class="l">There are no fees to use this service.</span></p>
+        </div>
+      </div>
+      <div class="wrap hero-go">
+        <a class="btn btn-wide" href="/eligibility/">Check My Eligibility <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+    <section class="motto">
+      <div class="motto-panel">
+        <h2 class="motto-label">What is the Canada Learning Bond (CLB)?</h2>
+        <p class="motto-text">The Learning Bond is <b>free money</b> for qualified Canadians that are saving for their <span class="nw">child's future education.</span></p>
+        <p class="motto-text">There are <b>no fees</b> to apply for the <span class="nw">Learning Bond.</span></p>
+      </div>
+    </section>
+    <section class="section alt what-is">
+      <div class="wrap">
+        <span class="eyebrow">Unclaimed benefits</span>
+        <h2>Money waiting to be claimed</h2>
+        <p>Over 3 million eligible Canadian children have not yet received their <span class="nw">Canada Learning Bond.</span></p>
+        <p>For those who qualify, receiving the benefit simply requires completing the <span class="nw">application process.</span></p>
+      </div>
+    </section>
+    <section class="section program">
+      <div class="wrap">
+        <div class="program-head">
+          <span class="eyebrow">By the numbers</span>
+          <h2>The program</h2>
+        </div>
+        <p class="prose">In 2004, the Government of Canada introduced the Canada Learning Bond to help parents save for their children's future education. Some highlights of the Learning Bond program include:</p>
+        <ul class="facts">
+          <li><b>Amount:</b> the Learning Bond is a benefit of up to $2,000 for each eligible child.</li>
+          <li><b>Extra $25:</b> with the first $500 payment, the government also pays $25. This is in addition to the Learning Bond payments.</li>
+          <li><b>Retroactive:</b> the Learning Bond is a retroactive benefit, meaning you may collect for past years.</li>
+          <li><b>Total payments:</b> over 2.3 million children have collected the Canada Learning Bond, totalling more than $2.4 billion in payments.</li>
+          <li><b>Unclaimed amounts:</b> over 3 million eligible children are not collecting the Bond because they have not yet applied.</li>
+          <li><b>Fees:</b> there are no fees to apply for and receive the Learning Bond. It is a free program.</li>
+        </ul>
+        <p class="prose">A person must be eligible to collect the Canada Learning Bond.</p>
+        <div class="program-cta"><a class="btn" href="/eligibility/">Check My Eligibility</a></div>
+      </div>
+    </section>
+    <section class="section alt">
+      <div class="wrap">
+        <div class="program-head">
+          <span class="eyebrow">How do I collect this benefit?</span>
+          <h2>The process</h2>
+        </div>
+        <ol class="flow">
+          <li><b>Check eligibility</b><span>Answer a few questions. It takes about a minute. No personal information is collected.</span></li>
+          <li><b>Learn your child's entitlement amount</b><span>In many cases, retroactive amounts are available for your child.</span></li>
+          <li><b>Apply for the Learning Bond</b><span>Guidance provided, if needed.</span></li>
+        </ol>
+        <div class="program-cta"><a class="btn" href="/eligibility/">Check My Eligibility</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <div class="footer-brand"><img src="/assets/logo-flag.png" alt="" width="32" height="32"> LearningBonds.ca</div>
+          <p>An education savings resource that helps Canadian families collect the Canada Learning Bond and education savings grants.</p>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <ul>
+            <li><a href="/eligibility/">Check My Eligibility</a></li>
+            <li><a href="/">Canada Learning Bond</a></li>
+            <li><a href="/education-savings-grant/">Education Savings Grant</a></li>
+            <li><a href="/faq/">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>About</h2>
+          <ul>
+            <li><a href="/contact/">Contact</a></li>
+            <li><a href="/privacy-policy/">Privacy</a></li>
+            <li><a href="/terms-of-use/">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; LearningBonds.ca 2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var b = document.querySelector('.nav-toggle'), n = document.getElementById('site-nav');
+      if (!b || !n) return;
+      b.addEventListener('click', function () {
+        var open = n.classList.toggle('open');
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    })();
+  </script>
+</body>
+</html>
