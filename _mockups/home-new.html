@@ -41,9 +41,13 @@
     .motto { padding: 0 0 2.5rem; }
     .motto-panel { max-width: calc(var(--max) + 3rem); margin: 0 auto; background: #f4f4f4; text-align: center; padding: 4.5rem 1.5rem 4.75rem; }
     .motto-label { margin: 0 0 1rem; font-size: .85rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-    .motto-text { max-width: 900px; margin: 0 auto; font-size: 2.25rem; line-height: 1.4; font-weight: 400; color: var(--ink); text-wrap: balance; }
+    .motto-text { max-width: var(--prose); margin: 0 auto; font-size: 2rem; line-height: 1.4; font-weight: 400; color: var(--ink); text-wrap: pretty; }
     .motto-text + .motto-text { margin-top: .6rem; }
     .motto-text b { font-weight: 600; }
+    /* Unclaimed benefits: same grey panel and width as section 2; text as wide as the program list above. */
+    .unclaimed { padding-top: .5rem; }
+    .unclaimed .motto-panel { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    .unclaimed.motto .what-is p, .motto-panel.what-is p { max-width: var(--prose); text-wrap: pretty; }
     @media (max-width: 767px) {
       .motto { padding-bottom: 2rem; }
       .motto-panel { padding: 3rem 1.25rem 3.25rem; }
@@ -110,8 +114,8 @@
         <div class="program-cta"><a class="btn" href="/eligibility/">Check My Eligibility</a></div>
       </div>
     </section>
-    <section class="section alt what-is">
-      <div class="wrap">
+    <section class="motto unclaimed">
+      <div class="motto-panel what-is">
         <span class="eyebrow">Unclaimed benefits</span>
         <h2>Money waiting to be claimed</h2>
         <p>Over 3 million eligible Canadian children have not yet received their <span class="nw">Canada Learning Bond.</span></p>
