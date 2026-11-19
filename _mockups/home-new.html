@@ -81,6 +81,20 @@
     .faq-list summary:focus-visible { outline: 3px solid var(--note-line); outline-offset: 2px; }
     .faq-list details p { margin: 0; padding: 0 2.5rem 1.2rem 0; font-size: 1.1rem; color: var(--text); max-width: none; }
     @media (max-width: 767px) { .faq-home .motto-panel { padding-top: 2.75rem; padding-bottom: 2.75rem; } .faq-list summary { font-size: 1.08rem; } }
+    /* Backgrounds (Todd, 2026-11-19): program grey, unclaimed white, process grey, questions white.
+       Grey sections are panels the same width as the photo; nothing runs the full width of the browser. */
+    .section.program, .section.process { padding: 0; border-top: 0; background: none; }
+    .section.program > .wrap, .section.process > .wrap { max-width: calc(var(--max) + 3rem); background: #f4f4f4; padding: 3.5rem 1.5rem; }
+    .section.program { margin-top: 2rem; }
+    .unclaimed, .faq-home { padding: 0; }
+    .unclaimed .motto-panel, .faq-home .motto-panel { background: none; padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    .faq-home .motto-panel { padding-bottom: 4rem; }
+    @media (max-width: 640px) {
+      .section.program { margin-top: 1.75rem; }
+      .section.program > .wrap, .section.process > .wrap { padding: 2.75rem 1.25rem; }
+      .unclaimed .motto-panel, .faq-home .motto-panel { padding-top: 2.75rem; padding-bottom: 2.75rem; }
+      .hero-go { text-align: center; }
+    }
   </style>
 </head>
 <body>
@@ -143,7 +157,7 @@
         <p>For those who qualify, receiving the benefit simply requires completing the <span class="nw">application process.</span></p>
       </div>
     </section>
-    <section class="section">
+    <section class="section process">
       <div class="wrap">
         <div class="program-head">
           <span class="eyebrow">How do I collect this benefit?</span>
