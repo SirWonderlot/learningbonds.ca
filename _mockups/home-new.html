@@ -53,6 +53,25 @@
       .motto-panel { padding: 3rem 1.25rem 3.25rem; }
       .motto-text { font-size: 1.5rem; line-height: 1.45; }
     }
+    /* Desktop: no button under the photo (Todd, 2026-11-19). Phones keep it for now. */
+    @media (min-width: 641px) { .hero-go { display: none; } .motto:first-of-type { margin-top: 2rem; } }
+    /* FAQ: same grey panel; each question opens and closes, with a plus sign on the right. */
+    .faq-home { padding-top: .5rem; }
+    .faq-home .motto-panel { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    .faq-home h2 { margin: 0 0 1.5rem; }
+    .faq-list { max-width: var(--prose); margin: 0 auto; text-align: left; border-top: 1px solid var(--line); }
+    .faq-list details { border-bottom: 1px solid var(--line); }
+    .faq-list summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      padding: 1.1rem 0; font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list summary::after { content: ""; flex: none; width: 1.1rem; height: 1.1rem;
+      background: linear-gradient(var(--link), var(--link)) center / 100% 2px no-repeat, linear-gradient(var(--link), var(--link)) center / 2px 100% no-repeat;
+      transition: transform .2s ease; }
+    .faq-list details[open] summary::after { transform: rotate(45deg); }
+    .faq-list summary:hover { color: var(--link); }
+    .faq-list summary:focus-visible { outline: 3px solid var(--note-line); outline-offset: 2px; }
+    .faq-list details p { margin: 0; padding: 0 2.5rem 1.2rem 0; font-size: 1.1rem; color: var(--text); max-width: none; }
+    @media (max-width: 767px) { .faq-home .motto-panel { padding-top: 2.75rem; padding-bottom: 2.75rem; } .faq-list summary { font-size: 1.08rem; } }
   </style>
 </head>
 <body>
@@ -134,6 +153,34 @@
           <li><b>Apply for the Learning Bond</b><span>Guidance provided, if needed.</span></li>
         </ol>
         <div class="program-cta"><a class="btn btn-wide" href="/eligibility/">Check My Eligibility for the CLB <span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+    </section>
+    <section class="motto faq-home">
+      <div class="motto-panel">
+        <span class="eyebrow">Common questions</span>
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <details>
+            <summary>Is there a cost to apply?</summary>
+            <p>No. There are no fees to apply for the Canada Learning Bond.</p>
+          </details>
+          <details>
+            <summary>How much can my child receive?</summary>
+            <p>Up to $2,000: $500 for the first year, then $100 for each year your child qualifies, up to age 15. With the first $500 payment, the government also pays $25.</p>
+          </details>
+          <details>
+            <summary>Can I collect for past years?</summary>
+            <p>Yes. The Learning Bond is a retroactive benefit, so your child may receive amounts for past years they qualified for.</p>
+          </details>
+          <details>
+            <summary>Where does the money go?</summary>
+            <p>It is deposited into a special registered account for your child, to be used when they enrol in education after high school.</p>
+          </details>
+          <details>
+            <summary>My child is 18 or older. Is it too late?</summary>
+            <p>Young adults aged 18 to 20 can apply for the Canada Learning Bond themselves until their 21st birthday.</p>
+          </details>
+        </div>
       </div>
     </section>
   </main>
