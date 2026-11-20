@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mock-up: wide desktop home page | LearningBonds.ca</title>
+  <style>
+    body { margin: 0; font-family: "Source Sans 3", -apple-system, "Helvetica Neue", Arial, sans-serif; background: #e9ecef; color: #1c2630; }
+    .top { padding: 1.5rem 2rem 1rem; }
+    h1 { font-size: 1.6rem; font-weight: 600; margin: 0 0 .4rem; }
+    h2 { font-size: 1.25rem; font-weight: 600; margin: 2.5rem 2rem .75rem; }
+    p { margin: 0; font-size: 1.05rem; }
+    .ctrl { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; font-size: 1.05rem; }
+    .ctrl input { width: min(640px, 60vw); }
+    .ctrl output { font-weight: 600; min-width: 5.5rem; }
+    .stage { margin: 0 2rem; background: #fff; border: 1px solid #c9d0d6; overflow: hidden; position: relative; }
+    .stage iframe { border: 0; display: block; transform-origin: 0 0; position: absolute; top: 0; left: 0; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1>Home page: hero photo and grey panels widen with the window</h1>
+    <p>Desktop only: 30px in from each side, same height, text stays at its current width. Phones are unchanged. Each view is shrunk to fit your screen.</p>
+  </div>
+
+  <h2>Drag to change the screen width</h2>
+  <div class="ctrl" style="margin:0 2rem 1rem"><input id="w" type="range" min="360" max="2560" step="10" value="1600"><output id="wo">1600px</output></div>
+  <div class="stage" data-w="1600" id="slider"><iframe src="/_mockups/home-wide.html"></iframe></div>
+
+  <h2>New, at 1280px</h2>
+  <div class="stage" data-w="1280"><iframe src="/_mockups/home-wide.html"></iframe></div>
+
+  <h2>New, at 1920px</h2>
+  <div class="stage" data-w="1920"><iframe src="/_mockups/home-wide.html"></iframe></div>
+
+  <h2>Current (live) version, at 1920px</h2>
+  <div class="stage" data-w="1920" style="margin-bottom:3rem"><iframe src="/"></iframe></div>
+
+  <script>
+    function fit(stage) {
+      var f = stage.querySelector('iframe'), w = +stage.dataset.w;
+      var avail = stage.clientWidth, scale = Math.min(1, avail / w);
+      var h = 1200;
+      f.style.width = w + 'px'; f.style.height = '200px';
+      try { h = f.contentDocument.documentElement.scrollHeight || h; } catch (e) {}
+      f.style.width = w + 'px'; f.style.height = h + 'px';
+      f.style.transform = 'scale(' + scale + ')';
+      stage.style.height = Math.ceil(h * scale) + 'px';
+    }
+    var stages = document.querySelectorAll('.stage');
+    stages.forEach(function (s) {
+      var f = s.querySelector('iframe');
+      f.addEventListener('load', function () { fit(s); setTimeout(function () { fit(s); }, 400); });
+      fit(s);
+    });
+    window.addEventListener('resize', function () { stages.forEach(fit); });
+    var r = document.getElementById('w'), o = document.getElementById('wo'), sl = document.getElementById('slider');
+    r.addEventListener('input', function () {
+      o.textContent = r.value + 'px'; sl.dataset.w = r.value;
+      sl.querySelector('iframe').style.width = r.value + 'px';
+      setTimeout(function () { fit(sl); }, 60);
+    });
+  </script>
+</body>
+</html>

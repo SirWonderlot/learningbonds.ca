@@ -536,7 +536,7 @@ main { display: block; }
    Phones: the photo sits on top and fades into the text below it, then the button. */
 .home-hero { padding: 12px 0 0; }
 .hero-photo { max-width: calc(var(--max) + 3rem); height: 520px; margin: 0 auto; padding: 1.5rem;
-  background: var(--surface-2) url("/assets/parliament.webp") center / cover no-repeat;
+  background: var(--surface-2) url("/assets/parliament-1920.webp") center / cover no-repeat;
   display: flex; align-items: center; justify-content: center; }
 .hero-text { width: 100%; max-width: 600px; display: grid; gap: 10px; text-align: center; }
 .home-hero h1, .home-hero .lede { margin: 0; background: rgba(255,255,255,.94); border: 1px solid rgba(28,38,48,.18); text-wrap: balance; }
@@ -554,6 +554,10 @@ main { display: block; }
 .home-band-inner { max-width: calc(var(--max) + 3rem); margin: 0 auto; padding: 3.5rem 1.5rem; text-align: center; }
 .home-band-inner.what-is p { max-width: var(--prose); text-align: left; text-wrap: pretty; }
 .faq-home .home-band-inner { padding-bottom: 4rem; }
+/* Desktop: the photo and the panels widen with the window, 30px in from each side; the text inside keeps its width. */
+@media (min-width: 641px) {
+  .hero-photo, .section.program > .wrap, .section.process > .wrap, .home-band-inner { max-width: none; margin-left: 30px; margin-right: 30px; }
+}
 
 /* Common questions: each opens and closes, with a plus sign on the right. */
 .faq-home h2 { margin: 0 0 1.5rem; }
